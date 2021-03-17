@@ -1,37 +1,19 @@
----
-title: "WorkbookWk04"
-author: "Preston Lyons"
-date: "17/03/2021"
-output: html_document
----
-
 ```{r libraries}
-if (!require(skimr)) install.packages('skimr') +
-if (!require(tidyverse)) install.packages('tidyverse') +
-if (!requireNamespace("devtools")) {install.packages("devtools")
-} +
+if (!require(skimr)) install.packages('skimr')
+if (!require(lubridate)) install.packages('lubridate')
+if (!require(tidyverse)) install.packages('tidyverse')
+if (!requireNamespace("devtools")) {
+  install.packages("devtools")
+}
 if (!require(easystats)) devtools::install_github("easystats/easystats")
 ```
-
 ```{r lib2}
-if (!require(ggthemes)) install.packages('ggthemes') +
-if (!require(pmdplyr)) install.packages("pmdplyr") +
+if (!require(ggthemes)) install.packages('ggthemes')
+if (!require(pmdplyr)) install.packages("pmdplyr")
 if (!require(kableExtra)) install.packages("kableExtra")
 ```
 
-```{r lib3}
-if (!require(report)) install.packages('report') +
-if (!require(brms)) install.packages('brms') +
-if (!require(lme4)) install.packages('lme4') +
-if (!require(table1)) install.packages('table1') +
-if (!require(modelsummary)) install.packages("modelsummary") +
-if (!require(naniar)) install.packages("naniar") +
-if (!require(ggraph)) install.packages("ggraph") +
-if (!require(gtsummary)) install.packages("gtsummary")
-```
-```{r lib4}
-asystats::install_easystats_latest()
-```
+## Import Data
 
 ```{r data1}
 nz_0 <- 
@@ -39,10 +21,8 @@ nz_0 <-
     url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv")
     )
 ```
+
 ```{r data2}
-summary(nz_0)
-```
-```{r data3}
 f<-c("None Of The Time",
      "A Little Of The Time",
      "Some Of The Time",
@@ -50,11 +30,11 @@ f<-c("None Of The Time",
      "All Of The Time")
 ```
 
-```{r fixmutate}
-library(tidyverse)
+```{r tidy}
+if (!require(tidyverse)) install.packages('tidyverse')
 ```
 
-```{r data4}
+```{r data3}
 nz <- nz_0 %>%
   dplyr::mutate_if(is.character, factor) %>%
   select(
@@ -75,25 +55,14 @@ nz <- nz_0 %>%
   mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
   mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
   dplyr::mutate(Wave = as.factor(Wave)) %>%
-  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) 
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE)
 ```
 
-Q.01
-Warm Up: Integers
+Question 1
+## Integer
 
-Lol help.
-
-Also, how the hell do you install papaja lol
-
-Q.02
-Scale, center, transform
-
-```{r scale}
-nz <- nz %>%
-  select(Pol.Orient)%>%
-  mutate(Pol.Orient = scale(Pol.Orient, scale = TRUE, center  = TRUE))
-head(nz)
+```{r integers}
+summary(nz)
 ```
-
 
 
