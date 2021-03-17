@@ -5,11 +5,86 @@ date: "17/03/2021"
 output: html_document
 ---
 
-```{r setup, include=FALSE}
-knitr::opts_chunk$set(echo = TRUE)
-```
-
 ```{r libraries}
-
+if (!require(skimr)) install.packages('skimr') +
+if (!require(tidyverse)) install.packages('tidyverse') +
+if (!requireNamespace("devtools")) {install.packages("devtools")
+} +
+if (!require(easystats)) devtools::install_github("easystats/easystats")
 ```
+
+```{r lib2}
+if (!require(ggthemes)) install.packages('ggthemes') +
+if (!require(pmdplyr)) install.packages("pmdplyr") +
+if (!require(kableExtra)) install.packages("kableExtra")
+```
+```{r lib3}
+if (!require(report)) install.packages('report') +
+if (!require(brms)) install.packages('brms') +
+if (!require(lme4)) install.packages('lme4') +
+if (!require(table1)) install.packages('table1') +
+if (!require(modelsummary)) install.packages("modelsummary") +
+if (!require(naniar)) install.packages("naniar") +
+if (!require(ggraph)) install.packages("ggraph") +
+if (!require(gtsummary)) install.packages("gtsummary")
+```
+```{r lib4}
+asystats::install_easystats_latest()
+```
+
+```{r data1}
+nz_0 <- 
+  readr::read_csv2(
+    url("https://raw.githubusercontent.com/go-bayes/psych-447/main/data/nz/nz.csv")
+    )
+```
+```{r data2}
+summary(nz_0)
+```
+```{r data3}
+f<-c("None Of The Time",
+     "A Little Of The Time",
+     "Some Of The Time",
+     "Most Of The Time",
+     "All Of The Time")
+```
+
+```{r fixmutate}
+library(tidyverse)
+```
+
+```{r data4}
+nz <- nz_0 %>%
+  dplyr::mutate_if(is.character, factor) %>%
+  select(
+    -c(
+      SWB.Kessler01,
+      SWB.Kessler02,
+      SWB.Kessler03,
+      SWB.Kessler04,
+      SWB.Kessler05,
+      SWB.Kessler06
+    )
+  ) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  mutate(FeelHopeless = forcats::fct_relevel(FeelHopeless, f)) %>%
+  mutate(FeelDepressed = forcats::fct_relevel(FeelDepressed, f)) %>%
+  mutate(FeelRestless = forcats::fct_relevel(FeelRestless, f)) %>%
+  mutate(EverythingIsEffort = forcats::fct_relevel(EverythingIsEffort, f)) %>%
+  mutate(FeelWorthless = forcats::fct_relevel(FeelWorthless, f)) %>%
+  mutate(FeelNervous = forcats::fct_relevel(FeelNervous, f)) %>%
+  dplyr::mutate(Wave = as.factor(Wave)) %>%
+  dplyr::mutate(date = make_date(year = 2009, month = 6, day = 30) + TSCORE) 
+```
+
+Q.01
+Warm Up: Integers
+
+```{r integers}
+as.integer(x)
+```
+
+Q.02
+Scale, center, transform
+
 
