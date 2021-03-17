@@ -61,8 +61,21 @@ nz <- nz_0 %>%
 Question 1
 ## Integer
 
-```{r integers}
-summary(nz)
+```{r camtaylor}
+nz %>%
+  select(contains("hour"))
 ```
+```{r integer1}
+nz2 <- nz %>%
+dplyr::mutate(as.integer(HLTH.SleepHours)) %>%
+dplyr::mutate(as.integer(Hours.Internet)) %>%
+dplyr::mutate(as.integer(Hours.Exercise)) %>%
+dplyr::mutate(as.integer(Hours.Work)) %>%
+dplyr::mutate(as.integer(Hours.News)) %>%
+dplyr::mutate(as.integer(HoursCharity))
+```
+
+Question 2
+## Scale, Center, Transform
 
 
