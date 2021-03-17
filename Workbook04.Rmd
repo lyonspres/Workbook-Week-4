@@ -81,7 +81,7 @@ Q.01
 Warm Up: Integers
 
 ```{r integers}
-as.integer(x)
+
 ```
 
 Q.02
