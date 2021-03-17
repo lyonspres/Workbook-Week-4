@@ -75,7 +75,41 @@ dplyr::mutate(as.integer(Hours.News)) %>%
 dplyr::mutate(as.integer(HoursCharity))
 ```
 
-Question 2
+Question 2a
 ## Scale, Center, Transform
 
+```{r imsadrn}
+nz3 <- nz2 %>%
+  select(Pol.Orient)%>%
+  mutate(Pol.Orient = scale(Pol.Orient, scale = TRUE, center  = TRUE))
+head(nz3)
+```
 
+Create a new indicator that standardises the Pol.Orient variable, create a new indicator that centers the Pol.Orient variable, create a new indicator that centres the Age variable in decade-long units. Do this in a single piped workflow.
+
+Question 2b
+## Scale, Center, Transform
+
+Question 3
+## Scale, Center, Transform
+
+Question 4
+## Scale, Center, Transform
+
+Question 5
+## Scale, Center, Transform
+
+Question 6
+## Scale, Center, Transform
+
+Question 7
+## Scale, Center, Transform
+
+Question 8
+## Scale, Center, Transform
+
+Question 9
+## Scale, Center, Transform
+
+Question 10
+## Scale, Center, Transform
