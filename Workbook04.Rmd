@@ -80,11 +80,20 @@ nz <- nz_0 %>%
 Q.01
 Warm Up: Integers
 
-```{r integers}
+Lol help.
 
-```
+Also, how the hell do you install papaja lol
 
 Q.02
 Scale, center, transform
+
+```{r scale}
+nz <- nz %>%
+  select(Pol.Orient)%>%
+  mutate(Pol.Orient = scale(Pol.Orient, scale = TRUE, center  = TRUE))
+head(nz)
+```
+
+
 
 
