@@ -80,21 +80,38 @@ Question 2a
 
 ```{r imsadrn}
 nz3 <- nz2 %>%
-  select(Pol.Orient)%>%
-  mutate(Pol.Orient = scale(Pol.Orient, scale = TRUE, center  = TRUE))
+  select(Pol.Orient, Age)%>%
+    mutate(Pol.Orient1 = scale(Pol.Orient, scale = TRUE, center  = TRUE)) %>%
+  mutate(Age1 = scale(Age, scale = FALSE, center  = TRUE))
 head(nz3)
 ```
-
-Create a new indicator that standardises the Pol.Orient variable, create a new indicator that centers the Pol.Orient variable, create a new indicator that centres the Age variable in decade-long units. Do this in a single piped workflow.
-
 Question 2b
-## Scale, Center, Transform
+## Data Wrangle
+
+```{r wrangle}
+nz4 <- nz %>%
+  select(Hours.Exercise, Wave) %>%
+  mutate(Hours.Exercise44 = scale(Hours.Exercise, scale = TRUE, center  = TRUE)) %>%
+  filter(Wave !="2019")
+
+## Compare
+
+summary(nz4$Hours.Exercise44)
+summary(nz4$Wave)
+```
 
 Question 3
-## Scale, Center, Transform
+## Working with dates
+
+```{r wannagoonadate}
+nz5 <- nz %>%
+  dplyr::mutate(date = make_date(year = 2018, year = 2019) + TSCORE)
+```
+
+What are the maximum number of responses for a single day in 2018 and the maximum number of responses for a single day in 2019?
 
 Question 4
-## Scale, Center, Transform
+## Calculating dates and creating summaries
 
 Question 5
 ## Scale, Center, Transform
