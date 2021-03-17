@@ -18,6 +18,7 @@ if (!require(ggthemes)) install.packages('ggthemes') +
 if (!require(pmdplyr)) install.packages("pmdplyr") +
 if (!require(kableExtra)) install.packages("kableExtra")
 ```
+
 ```{r lib3}
 if (!require(report)) install.packages('report') +
 if (!require(brms)) install.packages('brms') +
@@ -93,7 +94,6 @@ nz <- nz %>%
   mutate(Pol.Orient = scale(Pol.Orient, scale = TRUE, center  = TRUE))
 head(nz)
 ```
-
 
 
 
