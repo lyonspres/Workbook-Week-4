@@ -128,8 +128,8 @@ time_length(int, "month")
 Question 6
 ## Create an ordered factor from numerical data
 
-```{r factors1212231234}
-nz <-nz %>%
+```{r factor3452}
+nz7 <-nz %>%
   dplyr::mutate(relicats = cut(
     Religion.Church,
     breaks = c(-Inf, 0, 4, Inf),  
@@ -139,25 +139,41 @@ nz <-nz %>%
 table(nz$relicats, useNA = "ifany")
 ```
 
+*Make sure to re-level the factor so that the ordinal ranking moves from lowest to highest
+??
+
 Question 7a
 ## Make a summary table
 
+```{r liahelper}
+nz5 <- nz %>%
+  select(date, HLTH.SleepHours) %>%
+  mutate(Months = month(date, label = TRUE)) %>%
+  group_by(Months) %>%
+  arrange(Months)
+```
+
 ```{r kablekable}
 library(kableExtra)
-nz %>%
-  select(k6cats, Wave) %>%
-  filter(!is.na(k6cats))%>%
-  group_by( Wave, k6cats) %>%
-  summarise(n = n())%>%
-  kbl(caption = "Average Hours of Sleep by Month") %>%
-   kable_classic_2(c("striped", "hover"), full_width = TRUE)%>%
+nz5 %>%
+  select(HLTH.SleepHours, Months) %>%
+  filter(!is.na(HLTH.SleepHours))%>%
+  group_by(Months) %>%
+  summarise(av_sleep = mean(HLTH.SleepHours, na.rm = T))%>%
+  pivot_wider(names_from = Months, values_from = av_sleep) %>%
+  kbl(caption = "Average Number of Hours of Sleep by Month") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE) %>%
   collapse_rows()
 ```
 
-create a table for average hours of sleep by month in the nz dataset
-
 Question 7b
 ## Make a summary graph
+
+```{r graph_1}
+m0 <- glm("av_sleep" ~ Months, data = nz5 ) %>%
+parameters::model_parameters(m0)  %>%
+  print_html(caption = "TITLE")
+```
 
 Question 8
 ## Correlation graph
@@ -165,9 +181,10 @@ Question 8
 Question 9
 ## Create a blank papaja report
 
+* Package ‘papaja’ is not available for this version of R
+
 Question 10
 ## Patchwork
 
-Mention in workbook:
 
-What is cumulative in the workbook and what isn't 
+
