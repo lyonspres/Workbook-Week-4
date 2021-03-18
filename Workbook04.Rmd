@@ -65,14 +65,17 @@ Question 1
 nz %>%
   select(contains("hour"))
 ```
-```{r integer1}
+```{r integer22}
 nz2 <- nz %>%
-dplyr::mutate(as.integer(HLTH.SleepHours)) %>%
-dplyr::mutate(as.integer(Hours.Internet)) %>%
-dplyr::mutate(as.integer(Hours.Exercise)) %>%
-dplyr::mutate(as.integer(Hours.Work)) %>%
-dplyr::mutate(as.integer(Hours.News)) %>%
-dplyr::mutate(as.integer(HoursCharity))
+  mutate(Hours.Internet_int = as.integer(Hours.Internet),
+  Hours.Exercise_int = as.integer(Hours.Exercise),
+  Hours.Work_int = as.integer(Hours.Work),
+  Hours.News_int = as.integer(Hours.News),
+  HoursCharity_int = as.integer(HoursCharity))
+```
+
+```{r STD}
+str(nz2)
 ```
 
 Question 2a
@@ -81,8 +84,9 @@ Question 2a
 ```{r imsadrn}
 nz3 <- nz2 %>%
   select(Pol.Orient, Age)%>%
-    mutate(Pol.Orient1 = scale(Pol.Orient, scale = TRUE, center  = TRUE)) %>%
-  mutate(Age1 = scale(Age, scale = FALSE, center  = TRUE))
+  mutate(Pol.Orient1 = scale(Pol.Orient, scale = TRUE, center  = TRUE)) %>%
+  mutate(Pol.Orient2 = scale(Pol.Orient, scale = FALSE, center = TRUE)) %>%
+  mutate(Age1 = scale(Age, scale = FALSE, center  = TRUE)/10)
 head(nz3)
 ```
 Question 2b
@@ -114,19 +118,56 @@ Question 4
 ## Calculating dates and creating summaries
 
 Question 5
-## Scale, Center, Transform
+## Working with date intervals
+
+```{r jordanandparis}
+int<-lubridate::interval(ymd_hms("1995-12-25-05-02-22"), ymd_hms("2021-03-20-13-22-04"))
+time_length(int, "month")
+```
 
 Question 6
-## Scale, Center, Transform
+## Create an ordered factor from numerical data
 
-Question 7
-## Scale, Center, Transform
+```{r factors1212231234}
+nz <-nz %>%
+  dplyr::mutate(relicats = cut(
+    Religion.Church,
+    breaks = c(-Inf, 0, 4, Inf),  
+    labels = c("Non-attendance", "Moderate attendance", "Frequent attendance"), 
+    right = TRUE
+  ))
+table(nz$relicats, useNA = "ifany")
+```
+
+Question 7a
+## Make a summary table
+
+```{r kablekable}
+library(kableExtra)
+nz %>%
+  select(k6cats, Wave) %>%
+  filter(!is.na(k6cats))%>%
+  group_by( Wave, k6cats) %>%
+  summarise(n = n())%>%
+  kbl(caption = "Average Hours of Sleep by Month") %>%
+   kable_classic_2(c("striped", "hover"), full_width = TRUE)%>%
+  collapse_rows()
+```
+
+create a table for average hours of sleep by month in the nz dataset
+
+Question 7b
+## Make a summary graph
 
 Question 8
-## Scale, Center, Transform
+## Correlation graph
 
 Question 9
-## Scale, Center, Transform
+## Create a blank papaja report
 
 Question 10
-## Scale, Center, Transform
+## Patchwork
+
+Mention in workbook:
+
+What is cumulative in the workbook and what isn't 
