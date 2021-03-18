@@ -115,11 +115,24 @@ Question 3
 ## Working with dates
 
 ```{r wannagoonadate}
-nz5 <- nz %>%
-  dplyr::mutate(date = make_date(year = 2018, year = 2019) + TSCORE)
+datrep <- nz %>%
+  count(day = floor_date(date, "day"))%>%
+  dplyr::mutate(Year = factor(ifelse(
+    day < "2018-01-01",
+    2017,
+    ifelse(day < "2019-01-01", 2018,
+           ifelse(day < "2020-01-01", 2019, 2020))
+  ))) %>%
+  arrange(day)
 ```
 
-What are the maximum number of responses for a single day in 2018 and the maximum number of responses for a single day in 2019?
+```{r d8m8}
+datrep%>%
+  arrange(desc(n))
+```
+
+Maxmimum for 2019: 67
+Maximum for 2018: 121
 
 Question 4
 ## Calculating dates and creating summaries
@@ -177,8 +190,16 @@ Question 7b
 ## Make a summary graph
 
 ```{r graph_1}
-m0 <- glm("av_sleep" ~ Months, data = nz5 ) %>%
-parameters::model_parameters(m0)
+nz9 <- nz5 %>%
+  select(HLTH.SleepHours, Months) %>%
+  filter(!is.na(HLTH.SleepHours))%>%
+  group_by(Months) %>%
+  summarise(av_sleep = mean(HLTH.SleepHours, na.rm = T))
+```
+
+```{r newchunk}
+m0 <- glm(av_sleep ~ Months, data = nz9 ) %>%
+parameters::model_parameters()
 ```
 
 Question 8
@@ -242,7 +263,6 @@ library(patchwork)
 # create a two panel plot
 p1 / p2 + 
   plot_annotation(title = "Plot of multilevel (a) and single-level (b) correlation", tag_levels = 'a')
-windowsFonts("Arial" = windowsFont("Arial"))
 ```
 
 What do you find most interesting about this plot? The strong correclations present between feeling worthless, depressed, and hopeless. 
@@ -250,10 +270,14 @@ What do you find most interesting about this plot? The strong correclations pres
 Question 9
 ## Create a blank papaja report
 
-* Package ‘papaja’ is not available for this version of R
+```{r papaja}
+if(!"devtools" %in% rownames(installed.packages())) install.packages("devtools")
+devtools::install_github("crsh/papaja")
+devtools::install_github("crsh/papaja@devel")
+```
 
 Question 10
 ## Patchwork
 
-
+Use the patchwork library to create a figure with two plots on top of each other. Use the tag_levels function to index each of the two plots. The graphs should describe some dimension of the truncated nz dataset.
 
