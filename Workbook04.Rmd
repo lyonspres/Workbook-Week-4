@@ -1,3 +1,8 @@
+---
+output:
+  word_document: default
+  html_document: default
+---
 ```{r libraries}
 if (!require(skimr)) install.packages('skimr')
 if (!require(lubridate)) install.packages('lubridate')
@@ -102,6 +107,8 @@ nz4 <- nz %>%
 
 summary(nz4$Hours.Exercise44)
 summary(nz4$Wave)
+
+nz4
 ```
 
 Question 3
@@ -171,12 +178,74 @@ Question 7b
 
 ```{r graph_1}
 m0 <- glm("av_sleep" ~ Months, data = nz5 ) %>%
-parameters::model_parameters(m0)  %>%
-  print_html(caption = "TITLE")
+parameters::model_parameters(m0)
 ```
 
 Question 8
 ## Correlation graph
+
+```{r corrgraph}
+nz8 <- nz %>%
+  mutate(FeelHopeless_int = as.integer(FeelHopeless),
+  FeelDepressed_int = as.integer(FeelDepressed),
+  FeelRestless_int = as.integer(FeelRestless),
+  EverythingIsEffort_int = as.integer(EverythingIsEffort),
+  FeelWorthless_int = as.integer(FeelWorthless),
+  FeelNervous_int = as.integer(FeelNervous))
+```
+
+```{r corrgraph2}
+moodnz <- nz%>%
+  select(
+    FeelHopeless,
+    FeelDepressed,
+    FeelRestless,
+    EverythingIsEffort,
+    FeelWorthless,
+    FeelNervous,
+    Id
+  ) %>%
+  mutate_all(., as.numeric) %>% #make numeric 
+  mutate(Id = as.factor(Id),
+         FeelNervous = log(FeelNervous + 1))
+```
+
+```{r correr23r5}
+library(correlation)
+library(ggraph)
+p1<-moodnz %>%
+  correlation(partial = FALSE, multilevel = TRUE ) %>%
+  plot()
+```
+
+```{r corrfinal}
+moodnz %>%
+  correlation(partial = FALSE, multilevel = TRUE ) %>%
+  summary()
+```
+```{r anothercorr}
+library(correlation)
+p2<-moodnz %>%
+  select(-Id)%>% # get rid of grouping variable
+  correlation(partial = FALSE, multilevel = FALSE ) %>%
+  plot()
+```
+
+```{r anotherone}
+moodnz %>%
+  select(-Id)%>% # get rid of grouping variable
+  correlation(partial = FALSE, multilevel = FALSE ) %>%
+  summary()
+```
+```{r plotplot}
+library(patchwork)
+# create a two panel plot
+p1 / p2 + 
+  plot_annotation(title = "Plot of multilevel (a) and single-level (b) correlation", tag_levels = 'a')
+windowsFonts("Arial" = windowsFont("Arial"))
+```
+
+What do you find most interesting about this plot? The strong correclations present between feeling worthless, depressed, and hopeless. 
 
 Question 9
 ## Create a blank papaja report
