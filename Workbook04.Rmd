@@ -137,6 +137,18 @@ Maximum for 2018: 121
 Question 4
 ## Calculating dates and creating summaries
 
+```{r datesummaries23232}
+
+```
+
+How many days are there between the date with the highest number of responses and the date with the second highest number of responses?
+
+```{r dateBONUS1212}
+
+```
+
+Bonus: Calculate difference between the number of responses on the highest response date and second highest response date.
+
 Question 5
 ## Working with date intervals
 
