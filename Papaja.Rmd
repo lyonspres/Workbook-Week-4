@@ -1,8 +1,92 @@
 ---
-output:
-  word_document: default
-  html_document: default
+title             : "The title"
+shorttitle        : "Title"
+
+author: 
+  - name          : "First Author"
+    affiliation   : "1"
+    corresponding : yes    # Define only one corresponding author
+    address       : "Postal address"
+    email         : "my@email.com"
+    role:         # Contributorship roles (e.g., CRediT, https://casrai.org/credit/)
+      - Conceptualization
+      - Writing - Original Draft Preparation
+      - Writing - Review & Editing
+  - name          : "Ernst-August Doelle"
+    affiliation   : "1,2"
+    role:
+      - Writing - Review & Editing
+
+affiliation:
+  - id            : "1"
+    institution   : "Wilhelm-Wundt-University"
+  - id            : "2"
+    institution   : "Konstanz Business School"
+
+authornote: |
+  Add complete departmental affiliations for each author here. Each new line herein must be indented, like this line.
+
+  Enter author note here.
+
+abstract: |
+  One or two sentences providing a **basic introduction** to the field,  comprehensible to a scientist in any discipline.
+  
+  Two to three sentences of **more detailed background**, comprehensible  to scientists in related disciplines.
+  
+  One sentence clearly stating the **general problem** being addressed by  this particular study.
+  
+  One sentence summarizing the main result (with the words "**here we show**" or their equivalent).
+  
+  Two or three sentences explaining what the **main result** reveals in direct comparison to what was thought to be the case previously, or how the  main result adds to previous knowledge.
+  
+  One or two sentences to put the results into a more **general context**.
+  
+  Two or three sentences to provide a **broader perspective**, readily comprehensible to a scientist in any discipline.
+  
+  <!-- https://tinyurl.com/ybremelq -->
+  
+keywords          : "keywords"
+wordcount         : "X"
+
+bibliography      : ["r-references.bib"]
+
+floatsintext      : no
+figurelist        : no
+tablelist         : no
+footnotelist      : no
+linenumbers       : yes
+mask              : no
+draft             : no
+
+documentclass     : "apa6"
+classoption       : "man"
+output            : papaja::apa6_pdf
 ---
+
+```{r setup, include = FALSE}
+library("papaja")
+r_refs("r-references.bib")
+```
+
+```{r analysis-preferences}
+# Seed for random number generation
+set.seed(42)
+knitr::opts_chunk$set(cache.extra = knitr::rand_seed)
+```
+
+
+
+# Methods
+We report how we determined our sample size, all data exclusions (if any), all manipulations, and all measures in the study. <!-- 21-word solution (Simmons, Nelson & Simonsohn, 2012; retrieved from http://ssrn.com/abstract=2160588) -->
+
+## Participants
+
+## Material
+
+## Procedure
+
+## Data analysis
+We used `r cite_r("r-references.bib")` for all our analyses.
 ```{r libraries}
 if (!require(skimr)) install.packages('skimr')
 if (!require(lubridate)) install.packages('lubridate')
@@ -282,11 +366,15 @@ moodnz %>%
   summary()
 ```
 ```{r plotplot}
-library(patchwork)
+#Comment: Johannes looked at it and can't knit to PDF
+#library(patchwork)
 # create a two panel plot
-p1 / p2 + 
-  plot_annotation(title = "Plot of multilevel (a) and single-level (b) correlation", tag_levels = 'a')
+#p1 / p2 + 
+ # plot_annotation(title = "Plot of multilevel (a) and single-level (b) correlation", #tag_levels = 'a')
 ```
+
+
+
 
 *What do you find most interesting about this plot?* The strong correlations present between feeling worthless, depressed, and hopeless. 
 
@@ -299,8 +387,6 @@ Question 9
 
 ```{r papaja}
 if(!"devtools" %in% rownames(installed.packages())) install.packages("devtools")
-devtools::install_github("crsh/papaja")
-devtools::install_github("crsh/papaja@devel")
 ```
 
 ```{r papaJAH}
@@ -318,3 +404,20 @@ Question 10
 
 Use the patchwork library to create a figure with two plots on top of each other. Use the tag_levels function to index each of the two plots. The graphs should describe some dimension of the truncated nz dataset.
 
+
+
+# Results
+
+# Discussion
+
+
+\newpage
+
+# References
+
+\begingroup
+\setlength{\parindent}{-0.5in}
+\setlength{\leftskip}{0.5in}
+
+<div id="refs" custom-style="Bibliography"></div>
+\endgroup
