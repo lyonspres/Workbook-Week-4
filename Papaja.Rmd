@@ -61,6 +61,8 @@ draft             : no
 documentclass     : "apa6"
 classoption       : "man"
 output            : papaja::apa6_pdf
+header-includes:
+  - \usepackage{tabu}
 ---
 
 ```{r setup, include = FALSE}

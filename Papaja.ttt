@@ -1,0 +1,14 @@
+\begin{table*}[hbt]
+\ifnextchar[{\eatarg}{}
+
+
+\caption{\label{tab:kablekable}Average Number of Hours of Sleep by Month}
+\centering
+\begin{tabu} to \linewidth {>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X>{\raggedleft}X}
+\hline
+Jan & Feb & Mar & Apr & May & Jun & Jul & Aug & Sep & Oct & Nov & Dec\\
+\hline
+6.810909 & 6.666667 & 6.792891 & 7.279487 & 7.064935 & 6.927352 & 6.957453 & 6.976087 & 6.666667 & 6.912844 & 6.940741 & 6.872973\\
+\hline
+\end{tabu}
+\end{table*}

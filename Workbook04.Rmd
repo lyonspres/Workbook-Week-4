@@ -318,3 +318,19 @@ Question 10
 
 Use the patchwork library to create a figure with two plots on top of each other. Use the tag_levels function to index each of the two plots. The graphs should describe some dimension of the truncated nz dataset.
 
+```{r patchwork}
+p3 <- ggplot(data = nz, aes(x = KESSLER6sum, y = FeelDepressed, fill = FeelDepressed)) +
+  geom_boxplot(notch = TRUE) + scale_fill_viridis_d()+
+  ggtitle('Feeling Depressed')
+
+p4 <- ggplot (data = nz, aes(x = KESSLER6sum, y = FeelHopeless, fill = FeelHopeless)) +
+  geom_boxplot(notch = TRUE) + scale_fill_viridis_d()+
+  ggtitle('Feeling Hopeless')
+
+p4_dimm <- get_dim(p4)
+p3_aligned <- net_dim(p3, p4_dims)
+plot(p3_aligned)
+plot(p4)
+align_patches(p3, p4)
+```
+
