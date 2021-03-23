@@ -2,6 +2,7 @@
 output:
   word_document: default
   html_document: default
+  always_allow_html: true
 ---
 ```{r libraries}
 if (!require(skimr)) install.packages('skimr')
@@ -286,30 +287,12 @@ p1 / p2 +
   plot_annotation(title = "Plot of multilevel (a) and single-level (b) correlation", tag_levels = 'a')
 ```
 
-*What do you find most interesting about this plot?* The strong correlations present between feeling worthless, depressed, and hopeless. 
-
-**Discuss further, note the plot doesn't show me everything that's going on here people halp!
-
-Can't see the strength of the "FeelWorthless" to "FeelDepressed" correlation
+*What do you find most interesting about this plot?* The strong correlations present between feeling worthless, depressed, and hopeless. However, I can't see the strength of the "FeelWorthless" to "FeelDepressed" correlation nor waht exactly is going on with the negative R scores in plot (A). 
 
 Question 9
 ## Create a blank papaja report
 
-```{r papaja}
-if(!"devtools" %in% rownames(installed.packages())) install.packages("devtools")
-devtools::install_github("crsh/papaja")
-devtools::install_github("crsh/papaja@devel")
-```
-
-```{r papaJAH}
-
-```
-
-
-
-
-
-
+See attached. 
 
 Question 10
 ## Patchwork
@@ -328,9 +311,3 @@ p4 <- ggplot (data = nz, aes(x = KESSLER6sum, y = FeelNervous, fill = FeelNervou
 p3/
   p4
 ```
-
-p4_dimm <- get_dim(p4)
-p3_aligned <- net_dim(p3, p4_dims)
-plot(p3_aligned)
-plot(p4)
-align_patches(p3, p4)
