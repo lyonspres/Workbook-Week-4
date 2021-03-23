@@ -167,7 +167,7 @@ nz7 <-nz %>%
 table(nz7$relichurchy, useNA = "ifany")
 ```
 
-*Make sure to re-level the factor so that the ordinal ranking moves from lowest to highest - because the factors are already leveled correctly, no re-leveling is required - 
+*Make sure to re-level the factor so that the ordinal ranking moves from lowest to highest: because the factors are already leveled correctly, no re-leveling is required - 
 re-leveling could otherwise be done with the re-level function
 
 Question 7a
@@ -219,11 +219,9 @@ sleep <- nz %>%
   theme_classic() + scale_fill_viridis_d()
 sleep
 ```
-Comment:
-
-Let me have a think!
-
 Briefly explain why some intervals are wider than others.
+
+typically, my understanding is that wider CI's imply less certainty about what the true population mean is. Given we are 95% sure the mean is within those intervals, if it's wider, that means we are less sure of what it is because we need to widen to intervals to capture that 95% certainty of our estimate of the mean. Those wider intervals (occuring in autumn and spring) have that less certainty of the estimatation of the mean sleep amount in those months, and my initial thought was because of daylights saving happening around those months, yet if that were true, where daylights saving ends (April) should have less sleep than when it starts (Septempber), but is the other way around which is surprising , and so that inference seems to be blown out the water. 
 
 Question 8
 ## Correlation graph
@@ -320,17 +318,19 @@ Use the patchwork library to create a figure with two plots on top of each other
 
 ```{r patchwork}
 p3 <- ggplot(data = nz, aes(x = KESSLER6sum, y = FeelDepressed, fill = FeelDepressed)) +
-  geom_boxplot(notch = TRUE) + scale_fill_viridis_d()+
-  ggtitle('Feeling Depressed')
+  geom_boxplot(notch = FALSE) + scale_fill_viridis_d()+
+  ggtitle('People Who Are Feeling Depressed')
 
-p4 <- ggplot (data = nz, aes(x = KESSLER6sum, y = FeelHopeless, fill = FeelHopeless)) +
-  geom_boxplot(notch = TRUE) + scale_fill_viridis_d()+
-  ggtitle('Feeling Hopeless')
+p4 <- ggplot (data = nz, aes(x = KESSLER6sum, y = FeelNervous, fill = FeelNervous)) +
+  geom_boxplot(notch = FALSE) + scale_fill_viridis_d()+
+  ggtitle('People Who Are Feeling Nervous')
+
+p3/
+  p4
+```
 
 p4_dimm <- get_dim(p4)
 p3_aligned <- net_dim(p3, p4_dims)
 plot(p3_aligned)
 plot(p4)
 align_patches(p3, p4)
-```
-
